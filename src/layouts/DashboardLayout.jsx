@@ -26,7 +26,7 @@ const DashboardLayout = () => {
   const canAccessCurrentModule = roleAccess[role]?.includes(currentModule);
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--bg-dark)' }}>
+    <div className="dashboard-layout-wrapper" style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--bg-dark)' }}>
       <aside className="dashboard-sidebar">
         <div style={{ padding: '2rem 1.5rem', borderBottom: '1px solid var(--border-color)' }}>
           <h2 style={{ fontSize: '1.4rem', color: 'var(--primary)', letterSpacing: '2px', fontFamily: '"Playfair Display", serif' }}>CROSSLINE OS</h2>
