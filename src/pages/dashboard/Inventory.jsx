@@ -102,7 +102,7 @@ const Inventory = () => {
                     <div className="inventory-variant-info">
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                         <span style={{ 
-                          display: 'inline-block', width: '10px', height: '10px', 
+                          display: 'inline-block', minWidth: '14px', width: '14px', height: '14px', 
                           borderRadius: '50%', backgroundColor: getColorHex(variant.color),
                           border: '1px solid rgba(255,255,255,0.2)'
                         }} title={variant.color} />
