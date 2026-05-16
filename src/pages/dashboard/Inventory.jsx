@@ -52,39 +52,47 @@ const Inventory = () => {
         </div>
       </Card>
 
-      <Card className="table-card">
-        <div className="responsive-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Model</th>
-                <th>Category</th>
-                <th>Color</th>
-                <th>Size</th>
-                <th>SKU</th>
-                <th>Stock</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row) => (
-                <tr key={row.id}>
-                  <td>
-                    <strong>{row.product?.model}</strong>
-                    <span>{row.product?.material}</span>
-                  </td>
-                  <td>{row.product?.category}</td>
-                  <td>{row.color}</td>
-                  <td>{row.size}</td>
-                  <td>{row.sku}</td>
-                  <td>{row.stockQty.toLocaleString('en-IN')}</td>
-                  <td><span className={`pill ${row.migrationStatus}`}>{row.migrationStatus}</span></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Card>
+      <div className="inventory-grid">
+        {rows.map((row) => (
+          <div key={row.id} className="inventory-card">
+            <div className="inventory-card-image">
+              {row.product?.image ? (
+                <img src={row.product.image} alt={row.product.model} />
+              ) : (
+                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>No Image</div>
+              )}
+            </div>
+            <div className="inventory-card-content">
+              <div className="inventory-card-header">
+                <div>
+                  <h3>{row.product?.model}</h3>
+                  <span>{row.product?.material}</span>
+                </div>
+                <span className={`pill ${row.migrationStatus}`}>{row.migrationStatus}</span>
+              </div>
+              <div className="inventory-card-meta">
+                <div>
+                  <small>Color</small>
+                  <strong>{row.color}</strong>
+                </div>
+                <div>
+                  <small>Size</small>
+                  <strong>{row.size}</strong>
+                </div>
+              </div>
+              <div className="inventory-card-footer">
+                <div>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>SKU: {row.sku}</span>
+                </div>
+                <div>
+                  <strong style={{ fontSize: '1.1rem', color: 'var(--text-main)' }}>{row.stockQty.toLocaleString('en-IN')}</strong>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginLeft: '0.25rem' }}>in stock</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

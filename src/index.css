@@ -665,6 +665,108 @@ textarea {
   transform: scale(1.06);
 }
 
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.inventory-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.inventory-card:hover {
+  transform: translateY(-4px);
+  background: var(--bg-card-hover);
+}
+
+.inventory-card-image {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: #111;
+  border-bottom: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.inventory-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.inventory-card:hover .inventory-card-image img {
+  transform: scale(1.05);
+}
+
+.inventory-card-content {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.inventory-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.inventory-card-header h3 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.inventory-card-header span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.inventory-card-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.inventory-card-meta div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.inventory-card-meta small {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.inventory-card-meta strong {
+  font-size: 0.9rem;
+  color: var(--primary);
+}
+
+.inventory-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 .table-card {
   padding: 0;
   overflow: hidden;
