@@ -3,6 +3,18 @@ import { Search, SlidersHorizontal } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import { getProductById, products, variants } from '../../data/mockData';
 
+const getColorHex = (colorName) => {
+  const map = {
+    'Carbon Black': '#1a1a1a',
+    'Champagne Gold': '#e6c280',
+    'Tortoise': '#5c3a21',
+    'Brushed Silver': '#c0c0c0',
+    'Crystal Clear': '#e0f7fa',
+    'Midnight Blue': '#191970'
+  };
+  return map[colorName] || '#888';
+};
+
 const Inventory = () => {
   const [category, setCategory] = useState('All');
   const [status, setStatus] = useState('All');
@@ -88,7 +100,14 @@ const Inventory = () => {
                 {variants.map((variant) => (
                   <div key={variant.id} className="inventory-variant-item">
                     <div className="inventory-variant-info">
-                      <strong>{variant.color}</strong>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <span style={{ 
+                          display: 'inline-block', width: '10px', height: '10px', 
+                          borderRadius: '50%', backgroundColor: getColorHex(variant.color),
+                          border: '1px solid rgba(255,255,255,0.2)'
+                        }} title={variant.color} />
+                        <strong>{variant.color}</strong>
+                      </div>
                       <small>{variant.size} • {variant.sku}</small>
                     </div>
                     <div className="inventory-variant-stock">
