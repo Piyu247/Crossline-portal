@@ -11,7 +11,7 @@ const Inventory = () => {
   const categories = ['All', ...new Set(products.map((product) => product.category))];
   const statuses = ['All', 'verified', 'printed', 'generated', 'pending', 'scanned'];
 
-  const rows = useMemo(() => variants.map((variant) => {
+  const filteredVariants = useMemo(() => variants.map((variant) => {
     const product = getProductById(variant.productId);
     return { ...variant, product };
   }).filter((row) => {
@@ -20,6 +20,20 @@ const Inventory = () => {
     const haystack = `${row.product?.model} ${row.color} ${row.size} ${row.sku}`.toLowerCase();
     return matchesCategory && matchesStatus && haystack.includes(query.toLowerCase());
   }), [category, query, status]);
+
+  const groupedProducts = useMemo(() => {
+    const groups = {};
+    filteredVariants.forEach(variant => {
+      if (!groups[variant.productId]) {
+        groups[variant.productId] = {
+          product: variant.product,
+          variants: []
+        };
+      }
+      groups[variant.productId].variants.push(variant);
+    });
+    return Object.values(groups);
+  }, [filteredVariants]);
 
   return (
     <div className="animate-fade-in">
@@ -48,16 +62,16 @@ const Inventory = () => {
               {statuses.map((item) => <option key={item}>{item}</option>)}
             </select>
           </label>
-          <div className="filter-chip"><SlidersHorizontal size={16} /> {rows.length} variations</div>
+          <div className="filter-chip"><SlidersHorizontal size={16} /> {filteredVariants.length} variations</div>
         </div>
       </Card>
 
       <div className="inventory-grid">
-        {rows.map((row) => (
-          <div key={row.id} className="inventory-card">
+        {groupedProducts.map(({ product, variants }) => (
+          <div key={product.id} className="inventory-card">
             <div className="inventory-card-image">
-              {row.product?.image ? (
-                <img src={row.product.image} alt={row.product.model} />
+              {product.image ? (
+                <img src={product.image} alt={product.model} />
               ) : (
                 <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>No Image</div>
               )}
@@ -65,29 +79,26 @@ const Inventory = () => {
             <div className="inventory-card-content">
               <div className="inventory-card-header">
                 <div>
-                  <h3>{row.product?.model}</h3>
-                  <span>{row.product?.material}</span>
+                  <h3>{product.model}</h3>
+                  <span>{product.material}</span>
                 </div>
-                <span className={`pill ${row.migrationStatus}`}>{row.migrationStatus}</span>
+                <span className="pill" style={{ color: 'var(--text-muted)' }}>{product.category}</span>
               </div>
-              <div className="inventory-card-meta">
-                <div>
-                  <small>Color</small>
-                  <strong>{row.color}</strong>
-                </div>
-                <div>
-                  <small>Size</small>
-                  <strong>{row.size}</strong>
-                </div>
-              </div>
-              <div className="inventory-card-footer">
-                <div>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>SKU: {row.sku}</span>
-                </div>
-                <div>
-                  <strong style={{ fontSize: '1.1rem', color: 'var(--text-main)' }}>{row.stockQty.toLocaleString('en-IN')}</strong>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginLeft: '0.25rem' }}>in stock</span>
-                </div>
+              <div className="inventory-variant-list">
+                {variants.map((variant) => (
+                  <div key={variant.id} className="inventory-variant-item">
+                    <div className="inventory-variant-info">
+                      <strong>{variant.color}</strong>
+                      <small>{variant.size} • {variant.sku}</small>
+                    </div>
+                    <div className="inventory-variant-stock">
+                      {variant.stockQty.toLocaleString('en-IN')}
+                    </div>
+                    <div className="inventory-variant-status">
+                      <span className={`pill ${variant.migrationStatus}`}>{variant.migrationStatus}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

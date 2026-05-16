@@ -733,38 +733,52 @@ textarea {
   color: var(--text-muted);
 }
 
-.inventory-card-meta {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+.inventory-variant-list {
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
   padding-top: 0.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.inventory-card-meta div {
+.inventory-variant-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(80px, auto) minmax(60px, auto);
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.inventory-variant-info {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
 }
 
-.inventory-card-meta small {
-  font-size: 0.7rem;
+.inventory-variant-info strong {
+  font-size: 0.8rem;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.inventory-variant-info small {
+  font-size: 0.65rem;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
-.inventory-card-meta strong {
-  font-size: 0.9rem;
-  color: var(--primary);
+.inventory-variant-stock {
+  font-size: 0.85rem;
+  color: var(--text-main);
+  text-align: right;
+  font-weight: 600;
 }
 
-.inventory-card-footer {
+.inventory-variant-status {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 0.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  justify-content: flex-end;
 }
 
 .table-card {
